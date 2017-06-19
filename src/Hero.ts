@@ -3,6 +3,7 @@ export interface Data {
 	y: number
 	velocityX: number	
 	velocityY: number
+	distance: number
 	runningFrame: number
 }
 
@@ -16,12 +17,13 @@ export function make(): Data {
 		y: 0,
 		velocityX: RUN_VELOCITY,
 		velocityY: 0,
+		distance: 0,
 		runningFrame: 0
 	}
 }
 
 export function update( hero: Data, dt: number ): Data {
-	const newHero = { ...hero }
+	const newHero = { ...hero, distance: hero.distance + dt*hero.velocityX }
 	if ( hero.y > 0 ) {
 		newHero.y += hero.velocityY * dt
 		newHero.velocityY += GRAVITY * dt
@@ -31,8 +33,7 @@ export function update( hero: Data, dt: number ): Data {
 			newHero.runningFrame = 0
 		}
 	} else {
-		newHero.runningFrame++
-		newHero.runningFrame %= 4
+		newHero.runningFrame = (0.0005*newHero.distance | 0) % 4
 	}
 	newHero.x += newHero.velocityX * dt
 	return newHero

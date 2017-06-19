@@ -13,4 +13,8 @@ export interface Update {
 	dt: number
 }
 
-export type Action = Init | Jump | Update
+export interface StartGame {
+	type: 'StartGame'
+}
+
+export type Action = Init | Jump | Update | StartGame
